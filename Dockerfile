@@ -8,7 +8,8 @@ WORKDIR /app
 COPY . /app
 
 # Install Django
-RUN pip install Django
+# Logout with POST requests only works with an older version
+RUN pip install Django "Django>=4.1,<4.2"
 
 # Expose port 8000 for the Django app
 EXPOSE 8000
