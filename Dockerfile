@@ -4,12 +4,15 @@ FROM python:3.9
 # Set the working directory to /app
 WORKDIR /app
 
+# Install requirements
+COPY requirements.txt ./
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt
+
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Install Django
-# Logout with POST requests only works with an older version
-RUN pip install Django "Django>=4.1,<4.2"
+RUN python manage.py collectstatic --noinput
 
 # Expose port 8000 for the Django app
 EXPOSE 8000
